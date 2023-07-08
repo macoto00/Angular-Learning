@@ -5,6 +5,7 @@ Contains:
 
 - Todo App
 - Employee App
+- Employee Manager
 
 Most frequent Commands:
 - ng new <project-name>: Creates a new Angular project with the specified name.

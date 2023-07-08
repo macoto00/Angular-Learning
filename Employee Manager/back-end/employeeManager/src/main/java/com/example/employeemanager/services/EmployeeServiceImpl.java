@@ -29,15 +29,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Optional<Employee> findEmployeeById(Long id) {
         return Optional.ofNullable(employeeRepository.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("User by id " + id + " not found.")));
-    } 
+    }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public void updateEmployee(Employee employee) {
+        employeeRepository.save(employee);
     }
 
     @Override
     public void deleteEmployee(Long id) {
-        employeeRepository.deleteEmployeeById(id);
+        Optional<Employee> employeeToDelete = employeeRepository.findById(id);
+        if (employeeToDelete.isPresent()) {
+            Employee existingEmployee = employeeToDelete.get();
+            employeeRepository.delete(existingEmployee);
+        } else {
+            throw new UserNotFoundException("User by id " + id + " not found.");
+        }
     }
 }

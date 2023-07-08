@@ -1,7 +1,3 @@
-Employee App
-
-Simple App to list all employees from database with basic CRUD operations.
-
 Frontend commands used:
 
 - ng new employee-app

@@ -9,9 +9,7 @@ Contains:
 
 Usefull link to Angular CLI - https://angular.io/cli
 
-===========================
-= Most frequent Commands: =
-===========================
+# Most frequent Commands: 
 
 Creates a new Angular project with the specified name.
   ```
@@ -58,9 +56,7 @@ Displays help information and lists available commands and options provided by t
 ng help
   ```
 
-=========================================
-= Most frequent ng generate Commands: ===
-=========================================
+# Most frequent ng generate Commands: 
 
 Generates a new component file with the specified name. Components are the building blocks of an Angular application and represent different parts of the user interface.
   ```

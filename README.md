@@ -8,7 +8,10 @@ Contains:
 - Employee Manager
 
 Most frequent Commands:
-- ng new <project-name>: Creates a new Angular project with the specified name.
+  ```
+ ng new <project-name>
+  ```
+- Creates a new Angular project with the specified name.
 - ng serve: Builds and serves the Angular application locally for development purposes. It launches a development server and automatically reloads the application when changes are made.
 - ng generate <schematic>: Generates different elements of an Angular application, such as components, services, modules, and more. Schematics are templates that help generate code quickly.
 - ng build: Builds the Angular application for production. It creates optimized bundles and prepares the app for deployment.

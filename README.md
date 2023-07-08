@@ -1,6 +1,11 @@
 # Angular-Learning
 Learning Angular from scratch with small tasks.
 
+Contains: 
+
+- Todo App
+- Employee App
+
 Most frequent Commands:
 - ng new <project-name>: Creates a new Angular project with the specified name.
 - ng serve: Builds and serves the Angular application locally for development purposes. It launches a development server and automatically reloads the application when changes are made.

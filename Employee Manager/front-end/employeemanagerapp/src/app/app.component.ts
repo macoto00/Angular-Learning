@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public editEmployee!: Employee;
   public deleteEmployee!: Employee;
 
-  constructor(private employeeService: EmployeeService){}
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.getEmployees();
@@ -32,13 +32,16 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onAddEmloyee(addForm: NgForm): void {
-    document.getElementById('add-employee-form').click();
+  public onAddEmployee(addForm: NgForm): void {
+    const addEmployeeForm = document.getElementById('add-employee-form');
+    if (addEmployeeForm) {
+      addEmployeeForm.click();
+    }
     this.employeeService.addEmployee(addForm.value).subscribe(
       (response: Employee) => {
         console.log(response);
-        this.getEmployees();
         addForm.reset();
+        this.getEmployees(); 
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -46,8 +49,9 @@ export class AppComponent implements OnInit {
       }
     );
   }
+  
 
-  public onUpdateEmloyee(employee: Employee): void {
+  public onUpdateEmployee(employee: Employee): void {
     this.employeeService.updateEmployee(employee).subscribe(
       (response: Employee) => {
         console.log(response);
@@ -59,26 +63,30 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onDeleteEmloyee(employeeId: number): void {
-    this.employeeService.deleteEmployee(employeeId).subscribe(
-      (response: void) => {
-        console.log(response);
-        this.getEmployees();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+  public onDeleteEmployee(employeeId: number | undefined): void {
+    if (employeeId !== undefined) {
+      this.employeeService.deleteEmployee(employeeId).subscribe(
+        (response: void) => {
+          console.log(response);
+          this.getEmployees();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+    }
   }
 
   public searchEmployees(key: string): void {
     console.log(key);
     const results: Employee[] = [];
     for (const employee of this.employees) {
-      if (employee.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      if (
+        (employee.name && employee.name.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
+        (employee.email && employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
+        (employee.phone && employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1) ||
+        (employee.jobTitle && employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1)
+      ) {
         results.push(employee);
       }
     }
@@ -88,27 +96,31 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public onOpenModal(employee: Employee, mode: string): void {
+  public onOpenModal(employee: Employee | null, mode: string): void {
     const container = document.getElementById('main-container');
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
-    if (mode === 'add') {
-      button.setAttribute('data-target', '#addEmployeeModal');
+    if (container) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.style.display = 'none';
+      button.setAttribute('data-toggle', 'modal');
+
+      if (mode === 'add') {
+        button.setAttribute('data-target', '#addEmployeeModal');
+      } else if (mode === 'edit') {
+        if (employee) {
+          this.editEmployee = employee;
+          button.setAttribute('data-target', '#updateEmployeeModal');
+        }
+      } else if (mode === 'delete') {
+        if (employee) {
+          this.deleteEmployee = employee;
+          button.setAttribute('data-target', '#deleteEmployeeModal');
+        }
+      }
+
+      container.appendChild(button);
+      button.click();
     }
-    if (mode === 'edit') {
-      this.editEmployee = employee;
-      button.setAttribute('data-target', '#updateEmployeeModal');
-    }
-    if (mode === 'delete') {
-      this.deleteEmployee = employee;
-      button.setAttribute('data-target', '#deleteEmployeeModal');
-    }
-    container.appendChild(button);
-    button.click();
   }
-
-
 
 }

@@ -3,7 +3,7 @@ Learning Angular from scratch with small tasks.
 
 Contains: 
 
-- Todo App
+- Task Tracker
 - Employee App
 - Employee Manager
 
